@@ -1,0 +1,12 @@
+#!/command/with-contenv bash
+# shellcheck shell=bash
+
+set -e
+
+echo "[init-mandos] Initializing mandos"
+
+mkdir -p /var/lib/mandos
+s6-envuidgid _mandos s6-chown -U /var/lib/mandos
+
+touch /run/mandos.pid
+s6-envuidgid _mandos s6-chown -U /run/mandos.pid

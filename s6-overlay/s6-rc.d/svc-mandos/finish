@@ -1,0 +1,7 @@
+#!/usr/bin/execlineb -S0
+
+echo "mandos terminated"
+
+if { eltest $# -ne 0 }
+if { eltest ${1} -ne 256 }
+s6-svscanctl -t /var/run/service

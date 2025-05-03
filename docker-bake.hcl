@@ -1,5 +1,9 @@
-variable "VERSION" {
+variable "MANDOS_VERSION" {
   default = "1.8.16-1"
+}
+
+variable "S6_OVERLAY_VERSION" {
+  default = "v3.2.0.2"
 }
 
 group "default" {
@@ -8,8 +12,9 @@ group "default" {
 
 target "default" {
   platforms = ["linux/amd64", "linux/arm64"]
-  tags = ["quay.io/seiferma/mandos-server:${VERSION}", "quay.io/seiferma/mandos-server:latest"]
+  tags = ["quay.io/seiferma/mandos-server:${MANDOS_VERSION}", "quay.io/seiferma/mandos-server:latest"]
   args = {
-    VERSION = "${VERSION}"
+    MANDOS_VERSION = "${MANDOS_VERSION}"
+    S6_OVERLAY_VERSION = "${S6_OVERLAY_VERSION}"
   }
 }
