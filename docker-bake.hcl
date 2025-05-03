@@ -1,8 +1,10 @@
 variable "MANDOS_VERSION" {
+  # renovate: datasource=repology depName=debian_12/mandos versioning=loose
   default = "1.8.16-1"
 }
 
 variable "S6_OVERLAY_VERSION" {
+  # renovate: datasource=github-releases depName=just-containers/s6-overlay
   default = "v3.2.0.2"
 }
 
