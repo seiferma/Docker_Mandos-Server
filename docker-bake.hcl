@@ -5,7 +5,7 @@ variable "MANDOS_VERSION" {
 
 variable "S6_OVERLAY_VERSION" {
   # renovate: datasource=github-releases depName=just-containers/s6-overlay versioning=loose
-  default = "3.2.0.2"
+  default = "3.2.1.0"
 }
 
 group "default" {
