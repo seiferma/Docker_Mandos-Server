@@ -2,12 +2,12 @@ FROM alpine:latest AS downloader
 ARG TARGETARCH
 ARG S6_OVERLAY_VERSION
 RUN apk add --no-cache xz gzip
-RUN wget -O /s6-overlay-noarch.tar.xz https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz && \
+RUN wget -O /s6-overlay-noarch.tar.xz https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz && \
     xz -dc < /s6-overlay-noarch.tar.xz > /s6-overlay-noarch.tar
 RUN if [ "$TARGETARCH" == "arm64" ]; then export S6_ARCH=aarch64; elif [ "$TARGETARCH" == "amd64" ]; then export S6_ARCH=x86_64; elif [ "$TARGETARCH" == "arm/v6" ]; then export S6_ARCH=armhf; else exit 1; fi && \
-    wget -O /s6-overlay-arch.tar.xz https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-$S6_ARCH.tar.xz && \
+    wget -O /s6-overlay-arch.tar.xz https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-$S6_ARCH.tar.xz && \
     xz -dc < /s6-overlay-arch.tar.xz > /s6-overlay-arch.tar && \
-    wget -O /syslogd-overlay-noarch.tar.gz https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/syslogd-overlay-noarch.tar.xz && \
+    wget -O /syslogd-overlay-noarch.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/syslogd-overlay-noarch.tar.xz && \
     xz -dc < /syslogd-overlay-noarch.tar.gz > syslogd-overlay-noarch.tar
 
 
