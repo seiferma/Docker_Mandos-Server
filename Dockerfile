@@ -12,7 +12,7 @@ RUN if [ "$TARGETARCH" == "arm64" ]; then export S6_ARCH=aarch64; elif [ "$TARGE
 
 
 
-FROM debian:stable-slim
+FROM debian:stable-slim AS default
 ARG MANDOS_VERSION
 
 # Install S6
@@ -35,3 +35,19 @@ RUN apt-get update && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
     userdel _mandos
 ADD s6-overlay /etc/s6-overlay
+
+
+
+FROM default AS matrix
+ARG TARGETARCH
+ARG MANDOS2MATRIX_VERSION
+
+# Install and configure Mandos2Matrix
+ENV DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends --no-install-suggests ca-certificates && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
+ADD --chmod=755 https://github.com/seiferma/deb_mandos2matrix/releases/download/v${MANDOS2MATRIX_VERSION}/mandos2matrix_${MANDOS2MATRIX_VERSION}_${TARGETARCH} /usr/bin/mandos2matrix
+ADD s6-overlay-matrix /etc/s6-overlay
